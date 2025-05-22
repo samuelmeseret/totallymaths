@@ -84,8 +84,11 @@ Have suggestions for new games or found a bug? We'd love to hear from you!
 
 ### **[🚀 START PLAYING NOW!](https://totallymaths.com/somethingijnfaisdhfsaidfjsada.html)**
 
----
+---<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2372648416712746"
+     crossorigin="anonymous"></script>
 
 *© 2024 Unblocked Games - Play Free Games Online*
+
+
 
 **⭐ Star this repository if you enjoy the games! ⭐**
