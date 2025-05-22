@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unblocked Games - Play Free Games</title>
+    
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2372648416712746" crossorigin="anonymous"></script>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/games.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🎮 Gaming Universe</a>
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="Search games..." id="searchInput">
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>🎮 Unblocked Games</h1>
+            <p>Play your favorite games anywhere, anytime!</p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All Games</button>
+            <button class="category-btn" data-category="action">Action</button>
+            <button class="category-btn" data-category="racing">Racing</button>
+            <button class="category-btn" data-category="adventure">Adventure</button>
+            <button class="category-btn" data-category="arcade">Arcade</button>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="games-grid" id="gamesGrid">
+            <!-- Snow Rider 3D -->
+            <div class="game-card" data-category="racing">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/snowrider3d_300x225.jpg" alt="Snow Rider 3D">
+                </div>
+                <div class="game-info">
+                    <h3>Snow Rider 3D</h3>
+                    <p>Surf down snowy slopes and avoid obstacles!</p>
+                    <button class="play-btn" onclick="openGame('Snow Rider 3D', 'https://www.hoodamath.com/mobile/games/snow-rider-3d/game.html?nocheckorient=1')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Drift Hunters -->
+            <div class="game-card" data-category="racing">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/drifthunters_300x225.jpg" alt="Drift Hunters">
+                </div>
+                <div class="game-info">
+                    <h3>Drift Hunters</h3>
+                    <p>Master the art of drifting with customizable cars!</p>
+                    <button class="play-btn" onclick="openGame('Drift Hunters', 'https://www.hoodamath.com/mobile/games/drift-hunters/game.html?nocheckorient=1')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Water Rider 3D -->
+            <div class="game-card" data-category="action">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/waterrider3d_300x225.jpg" alt="Water Rider 3D">
+                </div>
+                <div class="game-info">
+                    <h3>Water Rider 3D</h3>
+                    <p>Ride the waves and perform amazing stunts!</p>
+                    <button class="play-btn" onclick="openGame('Water Rider 3D', 'https://www.hoodamath.com/mobile/games/water-rider-3d/game.html?nocheckorient=1')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Run 3 -->
+            <div class="game-card" data-category="adventure">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/run3_300x225.jpg" alt="Run 3">
+                </div>
+                <div class="game-info">
+                    <h3>Run 3</h3>
+                    <p>Navigate through space tunnels!</p>
+                    <button class="play-btn" onclick="openGame('Run 3', 'https://www.hoodamath.com/mobile/games/run3/game.html?nocheckorient=1')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Dino Game -->
+            <div class="game-card" data-category="arcade">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/dinogame_300x225.jpg" alt="Dino Game">
+                </div>
+                <div class="game-info">
+                    <h3>Dino Game</h3>
+                    <p>The classic Chrome dinosaur game!</p>
+                    <button class="play-btn" onclick="openGame('Dino Game', 'https://www.hoodamath.com/mobile/games/dino-game/game.html?nocheckorient=1')">Play Now</button>
+                </div>
+            </div>
+
+            <!-- Slope Run -->
+            <div class="game-card" data-category="arcade">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/sloperun_300x225.jpg" alt="Slope Run">
+                </div>
+                <div class="game-info">
+                    <h3>Slope Run</h3>
+                    <p>Control a ball rolling down a steep slope!</p>
+                    <button class="play-btn" onclick="openGame('Slope Run', 'https://www.hoodamath.com/mobile/games/slope-run/game.html?nocheckorient=1')">Play Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title" id="modalTitle">Game Title</span>
+                <span class="close" onclick="closeGame()">&times;</span>
+            </div>
+            <iframe id="gameFrame" class="game-frame" src=""></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Unblocked Games - Play Free Games Online</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="dmca.html">DMCA</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/games.js"></script>
+</body>
+</html>
