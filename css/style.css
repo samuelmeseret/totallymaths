@@ -19,6 +19,18 @@ body {
     padding: 0 2rem;
 }
 
+/* Auto Ad Spaces */
+.ad-space {
+    margin: 2rem 0;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
 /* Navigation */
 .navbar {
     background: rgba(255, 255, 255, 0.1);
