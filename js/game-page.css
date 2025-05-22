@@ -1,0 +1,208 @@
+// Individual Game Page JavaScript
+
+// Fullscreen functionality
+function toggleFullscreen() {
+    const gameWrapper = document.querySelector('.game-wrapper');
+    const gameFrame = document.getElementById('gameFrame');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    
+    if (!document.fullscreenElement) {
+        // Enter fullscreen
+        if (gameWrapper.requestFullscreen) {
+            gameWrapper.requestFullscreen();
+        } else if (gameWrapper.webkitRequestFullscreen) {
+            gameWrapper.webkitRequestFullscreen();
+        } else if (gameWrapper.msRequestFullscreen) {
+            gameWrapper.msRequestFullscreen();
+        }
+        
+        fullscreenBtn.textContent = '🔙 Exit Fullscreen';
+        fullscreenBtn.style.position = 'fixed';
+        fullscreenBtn.style.bottom = '20px';
+        fullscreenBtn.style.left = '50%';
+        fullscreenBtn.style.transform = 'translateX(-50%)';
+        fullscreenBtn.style.zIndex = '9999';
+        fullscreenBtn.style.width = 'auto';
+        fullscreenBtn.style.padding = '0.8rem 2rem';
+        
+    } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+// Listen for fullscreen changes
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+function handleFullscreenChange() {
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+        // Exited fullscreen
+        fullscreenBtn.textContent = '⛶ Play Fullscreen';
+        fullscreenBtn.style.position = 'static';
+        fullscreenBtn.style.bottom = 'auto';
+        fullscreenBtn.style.left = 'auto';
+        fullscreenBtn.style.transform = 'none';
+        fullscreenBtn.style.zIndex = 'auto';
+        fullscreenBtn.style.width = '100%';
+        fullscreenBtn.style.padding = '1rem';
+    }
+}
+
+// Hide fullscreen button on iOS devices
+function checkMobileDevice() {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    
+    if (isIOS) {
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        if (fullscreenBtn) {
+            fullscreenBtn.style.display = 'none';
+        }
+    }
+}
+
+// Game loading indicator
+function showGameLoading() {
+    const gameFrame = document.getElementById('gameFrame');
+    const loadingDiv = document.createElement('div');
+    
+    loadingDiv.innerHTML = `
+        <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            z-index: 10;
+        ">
+            🎮 Loading Game...<br>
+            <div style="font-size: 1rem; margin-top: 1rem; opacity: 0.8;">
+                Please wait while the game loads
+            </div>
+        </div>
+    `;
+    
+    loadingDiv.style.cssText = `
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 600px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+    
+    const gameWrapper = document.querySelector('.game-wrapper');
+    gameWrapper.style.position = 'relative';
+    gameWrapper.appendChild(loadingDiv);
+    
+    // Remove loading screen after game loads
+    gameFrame.addEventListener('load', function() {
+        setTimeout(() => {
+            if (loadingDiv.parentNode) {
+                loadingDiv.remove();
+            }
+        }, 1000);
+    });
+}
+
+// Smooth scroll to game
+function scrollToGame() {
+    const gameContainer = document.querySelector('.game-container');
+    if (gameContainer) {
+        gameContainer.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    }
+}
+
+// Related games hover effects
+function initRelatedGamesEffects() {
+    const relatedGameCards = document.querySelectorAll('.related-game-card');
+    
+    relatedGameCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+}
+
+// Game performance optimization
+function optimizeGameFrame() {
+    const gameFrame = document.getElementById('gameFrame');
+    
+    // Add performance attributes
+    gameFrame.setAttribute('loading', 'lazy');
+    gameFrame.setAttribute('importance', 'high');
+    
+    // Preload game resources
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = gameFrame.src;
+    link.as = 'document';
+    document.head.appendChild(link);
+}
+
+// Keyboard shortcuts for fullscreen
+function initKeyboardShortcuts() {
+    document.addEventListener('keydown', function(event) {
+        // F11 or F for fullscreen
+        if (event.key === 'F11' || (event.key === 'f' && event.ctrlKey)) {
+            event.preventDefault();
+            toggleFullscreen();
+        }
+        
+        // ESC to exit fullscreen
+        if (event.key === 'Escape' && document.fullscreenElement) {
+            event.preventDefault();
+            toggleFullscreen();
+        }
+    });
+}
+
+// Initialize all functions when DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    checkMobileDevice();
+    showGameLoading();
+    initRelatedGamesEffects();
+    optimizeGameFrame();
+    initKeyboardShortcuts();
+    
+    // Auto-scroll to game on mobile
+    if (window.innerWidth <= 768) {
+        setTimeout(scrollToGame, 1000);
+    }
+});
+
+// Game analytics (optional)
+function trackGamePlay() {
+    // Track when user starts playing
+    const gameFrame = document.getElementById('gameFrame');
+    gameFrame.addEventListener('load', function() {
+        console.log('Game loaded successfully');
+        // You can add analytics tracking here
+    });
+}
+
+// Initialize game tracking
+window.addEventListener('load', trackGamePlay);
