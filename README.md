@@ -224,3 +224,7 @@ Welcome to the **most epic collection** of unblocked games on the internet! 🌍
 *Don't let this epic gaming opportunity slip away!*
 
 </div>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2372648416712746"
+     crossorigin="anonymous"></script>
