@@ -1,80 +1,144 @@
-<script>
-    // Page navigation
-    function showPage(pageId) {
-        // Hide all pages
-        const pages = document.querySelectorAll('.page-content');
-        pages.forEach(page => page.classList.remove('active'));
-        
-        // Show selected page
-        const targetPage = document.getElementById(pageId + 'Page');
-        if (targetPage) {
-            targetPage.classList.add('active');
+// Logo click returns to home
+        document.querySelector('.logo').addEventListener('click', function(e) {
+            e.preventDefault();
+            showPage('home');
+        });
+
+        // Initialize AdSense ads
+        function loadAds() {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (e) {
+                console.log('AdSense loading error:', e);
+            }
         }
-        
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    // Contact form submission
-    function submitContactForm(event) {
-        event.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(event.target);
-        const data = Object.fromEntries(formData);
-        
-        // Simulate form submission (in real implementation, this would send to a server)
-        alert('Thank you for your message! We will get back to you within 24-48 hours.');
-        
-        // Reset form
-        event.target.reset();
-    }
+        // Load ads when page loads
+        window.addEventListener('load', function() {
+            setTimeout(loadAds, 1000);
+        });
 
-    // Game functionality
-    function openGame(title, url) {
-        document.getElementById('modalTitle').textContent = title;
-        document.getElementById('gameFrame').src = url;
-        document.getElementById('gameModal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeGame() {
-        document.getElementById('gameModal').style.display = 'none';
-        document.getElementById('gameFrame').src = '';
-        document.body.style.overflow = 'auto';
-    }
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        const modal = document.getElementById('gameModal');
-        if (event.target === modal) {
-            closeGame();
+        // Reload ads when switching pages
+        function reloadPageAds() {
+            setTimeout(function() {
+                try {
+                    const pageAds = document.querySelectorAll('.page-content.active .adsbygoogle');
+                    pageAds.forEach(function(ad) {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    });
+                } catch (e) {
+                    console.log('Page ad loading error:', e);
+                }
+            }, 500);
         }
-    }
-
-    // ESC key to close modal
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            closeGame();
+    </script>
+</body>
+</html>    <script>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId + 'Page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Reload ads for the new page
+            reloadPageAds();
         }
-    });
 
-    // Category filtering and search (only works on home page)
-    document.addEventListener('DOMContentLoaded', function() {
-        const categoryBtns = document.querySelectorAll('.category-btn');
-        const gameCards = document.querySelectorAll('.game-card');
+        // Contact form submission
+        function submitContactForm(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Simulate form submission (in real implementation, this would send to a server)
+            alert('Thank you for your message! We will get back to you within 24-48 hours.');
+            
+            // Reset form
+            event.target.reset();
+        }
 
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all buttons
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
+        // Game functionality
+        function openGame(title, url) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('gameFrame').src = url;
+            document.getElementById('gameModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
 
-                const category = this.getAttribute('data-category');
+        function closeGame() {
+            document.getElementById('gameModal').style.display = 'none';
+            document.getElementById('gameFrame').src = '';
+            document.body.style.overflow = 'auto';
+        }
 
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target === modal) {
+                closeGame();
+            }
+        }
+
+        // ESC key to close modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeGame();
+            }
+        });
+
+        // Category filtering and search (only works on home page)
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const gameCards = document.querySelectorAll('.game-card');
+
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const category = this.getAttribute('data-category');
+
+                    gameCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
                 gameCards.forEach(card => {
-                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                    const gameTitle = card.querySelector('.game-title').textContent.toLowerCase();
+                    const gameDescription = card.querySelector('.game-description').textContent.toLowerCase();
+                    
+                    if (gameTitle.includes(searchTerm) || gameDescription.includes(searchTerm)) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
@@ -83,850 +147,1018 @@
             });
         });
 
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
-            gameCards.forEach(card => {
-                const gameTitle = card.querySelector('.game-title').textContent.toLowerCase();
-                const gameDescription = card.querySelector('.game-description').textContent.toLowerCase();
-                
-                if (gameTitle.includes(searchTerm) || gameDescription.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+        // Logo click returns to home
+        document.querySelector('.logo').addEventListener('click', function(e) {
+            e.preventDefault();
+            showPage('home');
         });
-    });
-
-    // Logo click returns to home
-    document.querySelector('.logo').addEventListener('click', function(e) {
-        e.preventDefault();
-        showPage('home');
-    });
-</script><!DOCTYPE html>
+    </script><!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Unblocked Games - Play Free Games at School</title>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unblocked Games - Play Free Games at School</title>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422597423401123"
+     crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        color: #333;
-    }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
 
-    .header {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 1rem 0;
-        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    .nav {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 2rem;
-    }
-
-    .logo {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #4a5568;
-        text-decoration: none;
-    }
-
-    .logo span {
-        color: #667eea;
-    }
-
-    .search-container {
-        flex: 1;
-        max-width: 400px;
-        margin: 0 2rem;
-        position: relative;
-    }
-
-    .search-box {
-        width: 100%;
-        padding: 0.8rem 1.2rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 25px;
-        font-size: 1rem;
-        outline: none;
-        transition: all 0.3s ease;
-    }
-
-    .search-box:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-    }
-
-    .nav-links a {
-        text-decoration: none;
-        color: #4a5568;
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-
-    .nav-links a:hover {
-        color: #667eea;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-
-    .hero {
-        text-align: center;
-        margin-bottom: 3rem;
-        color: white;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero p {
-        font-size: 1.2rem;
-        opacity: 0.9;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-
-    .categories {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .category-btn {
-        padding: 0.8rem 1.5rem;
-        background: rgba(255, 255, 255, 0.9);
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-    }
-
-    .category-btn:hover,
-    .category-btn.active {
-        background: #667eea;
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .games-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 2rem;
-        margin-bottom: 3rem;
-    }
-
-    .game-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        cursor: pointer;
-        backdrop-filter: blur(10px);
-    }
-
-    .game-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .game-image {
-        width: 100%;
-        height: 200px;
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-    }
-
-    .game-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .game-card:hover .game-image img {
-        transform: scale(1.05);
-    }
-
-    .game-image::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-        transition: opacity 0.3s ease;
-        opacity: 0;
-    }
-
-    .game-card:hover .game-image::after {
-        opacity: 1;
-    }
-
-    .game-info {
-        padding: 1.5rem;
-    }
-
-    .game-title {
-        font-size: 1.3rem;
-        font-weight: bold;
-        margin-bottom: 0.5rem;
-        color: #2d3748;
-    }
-
-    .game-description {
-        color: #718096;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin-bottom: 1rem;
-    }
-
-    .play-btn {
-        width: 100%;
-        padding: 0.8rem;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .play-btn:hover {
-        background: linear-gradient(135deg, #5a67d8, #6b46c1);
-        transform: translateY(-1px);
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(5px);
-    }
-
-    .modal-content {
-        position: relative;
-        margin: 2% auto;
-        width: 95%;
-        height: 90%;
-        background-color: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .modal-header {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .modal-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .close {
-        color: white;
-        font-size: 2rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-    }
-
-    .close:hover {
-        opacity: 0.7;
-    }
-
-    .game-frame {
-        flex: 1;
-        border: none;
-        width: 100%;
-        height: 100%;
-    }
-
-    .footer {
-        background: rgba(255, 255, 255, 0.95);
-        text-align: center;
-        padding: 2rem;
-        margin-top: 3rem;
-        backdrop-filter: blur(10px);
-    }
-
-    .footer p {
-        color: #718096;
-        margin-bottom: 1rem;
-    }
-
-    .footer-links {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .footer-links a {
-        color: #4a5568;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-        color: #667eea;
-    }
-
-    @media (max-width: 768px) {
         .nav {
-            flex-direction: column;
-            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a5568;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #667eea;
         }
 
         .search-container {
-            margin: 0;
-            max-width: 100%;
+            flex: 1;
+            max-width: 400px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
         }
 
         .hero h1 {
-            font-size: 2rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
         .games-grid {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-image img {
+            transform: scale(1.05);
+        }
+
+        .game-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .game-card:hover .game-image::after {
+            opacity: 1;
+        }
+
+        .game-info {
+            padding: 1.5rem;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+
+        .game-description {
+            color: #718096;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .play-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .play-btn:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: translateY(-1px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            width: 98%;
-            height: 95%;
-            margin: 1% auto;
+            position: relative;
+            margin: 2% auto;
+            width: 95%;
+            height: 90%;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
-    }
 
-    .hidden {
-        display: none;
-    }
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .page-content {
-        display: none;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 2rem;
-        margin: 2rem 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        max-width: 800px;
-        margin: 2rem auto;
-    }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
 
-    .page-content.active {
-        display: block;
-    }
+        .close {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
 
-    .page-content h2 {
-        color: #2d3748;
-        margin-bottom: 1.5rem;
-        font-size: 2rem;
-        border-bottom: 3px solid #667eea;
-        padding-bottom: 0.5rem;
-    }
+        .close:hover {
+            opacity: 0.7;
+        }
 
-    .page-content h3 {
-        color: #4a5568;
-        margin: 1.5rem 0 1rem 0;
-        font-size: 1.3rem;
-    }
+        .game-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
 
-    .page-content p {
-        color: #718096;
-        line-height: 1.6;
-        margin-bottom: 1rem;
-    }
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            backdrop-filter: blur(10px);
+        }
 
-    .page-content ul {
-        color: #718096;
-        margin: 1rem 0;
-        padding-left: 2rem;
-    }
+        .footer p {
+            color: #718096;
+            margin-bottom: 1rem;
+        }
 
-    .page-content li {
-        margin-bottom: 0.5rem;
-        line-height: 1.6;
-    }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
 
-    .back-btn {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        margin-bottom: 2rem;
-        transition: all 0.3s ease;
-    }
+        .footer-links a {
+            color: #4a5568;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-    .back-btn:hover {
-        background: linear-gradient(135deg, #5a67d8, #6b46c1);
-        transform: translateY(-1px);
-    }
+        .footer-links a:hover {
+            color: #667eea;
+        }
 
-    .contact-form {
-        background: #f7fafc;
-        padding: 2rem;
-        border-radius: 10px;
-        margin: 2rem 0;
-    }
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
 
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
+            .search-container {
+                margin: 0;
+                max-width: 100%;
+            }
 
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #2d3748;
-        font-weight: 500;
-    }
+            .hero h1 {
+                font-size: 2rem;
+            }
 
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 0.8rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: border-color 0.3s ease;
-    }
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
 
-    .form-group input:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: #667eea;
-    }
+            .modal-content {
+                width: 98%;
+                height: 95%;
+                margin: 1% auto;
+            }
+        }
 
-    .form-group textarea {
-        height: 120px;
-        resize: vertical;
-    }
+        .hidden {
+            display: none;
+        }
 
-    .submit-btn {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        padding: 1rem 2rem;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
+        .page-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 2rem auto;
+        }
 
-    .submit-btn:hover {
-        background: linear-gradient(135deg, #5a67d8, #6b46c1);
-        transform: translateY(-1px);
-    }
-</style>
+        .page-content.active {
+            display: block;
+        }
+
+        .page-content h2 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .page-content h3 {
+            color: #4a5568;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .page-content p {
+            color: #718096;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .page-content ul {
+            color: #718096;
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .page-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: translateY(-1px);
+        }
+
+        .contact-form {
+            background: #f7fafc;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: translateY(-1px);
+        }
+
+        /* AdSense Banner Styles */
+        .ad-banner {
+            margin: 2rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .ad-banner-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            margin-bottom: 1rem;
+        }
+
+        .ad-banner-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .ad-banner-footer {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+
+        .ad-banner-sidebar {
+            position: sticky;
+            top: 100px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .sidebar-ads {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px;
+            z-index: 50;
+        }
+
+        .sidebar-ads.left {
+            left: 10px;
+        }
+
+        .sidebar-ads.right {
+            right: 10px;
+        }
+
+        @media (max-width: 1400px) {
+            .sidebar-ads {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .ad-banner {
+                margin: 1rem 0;
+                padding: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-    <nav class="nav">
-        <a href="#" class="logo">Unblocked<span>Games</span></a>
-        <div class="search-container">
-            <input type="text" class="search-box" placeholder="Search games..." id="searchInput">
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">Unblocked<span>Games</span></a>
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="Search games..." id="searchInput">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Header Banner Ad -->
+        <div class="ad-banner-header">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7422597423401123"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
         </div>
-        <ul class="nav-links">
-            <li><a href="#" onclick="showPage('home')">Home</a></li>
-            <li><a href="#" onclick="showPage('about')">About</a></li>
-            <li><a href="#" onclick="showPage('contact')">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+    </header>
 
-<div class="container">
-    <!-- Home Page -->
-    <div id="homePage" class="page-content active">
-        <section class="hero">
-            <h1>🎮 Unblocked Games</h1>
-            <p>Play your favorite games anywhere, anytime - completely free and unblocked!</p>
-        </section>
+    <!-- Sidebar Ads for Desktop -->
+    <div class="sidebar-ads left">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7422597423401123"
+             data-ad-slot="9876543210"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+    
+    <div class="sidebar-ads right">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-7422597423401123"
+             data-ad-slot="5432109876"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
 
-        <div class="categories">
-            <button class="category-btn active" data-category="all">All Games</button>
-            <button class="category-btn" data-category="action">Action</button>
-            <button class="category-btn" data-category="racing">Racing</button>
-            <button class="category-btn" data-category="adventure">Adventure</button>
-            <button class="category-btn" data-category="arcade">Arcade</button>
+    <div class="container">
+        <!-- Home Page -->
+        <div id="homePage" class="page-content active">
+            <section class="hero">
+                <h1>🎮 Unblocked Games</h1>
+                <p>Play your favorite games anywhere, anytime - completely free and unblocked!</p>
+            </section>
+
+            <!-- Top Content Banner Ad -->
+            <div class="ad-banner">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7422597423401123"
+                     data-ad-slot="1357924680"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="categories">
+                <button class="category-btn active" data-category="all">All Games</button>
+                <button class="category-btn" data-category="action">Action</button>
+                <button class="category-btn" data-category="racing">Racing</button>
+                <button class="category-btn" data-category="adventure">Adventure</button>
+                <button class="category-btn" data-category="arcade">Arcade</button>
+            </div>
+
+            <div class="games-grid" id="gamesGrid">
+                <!-- Snow Rider 3D -->
+                <div class="game-card" data-category="racing" data-game="snow-rider-3d">
+                    <div class="game-image">
+                        <img src="https://www.hoodamath.com/large/snowrider3d_300x225.jpg" alt="Snow Rider 3D" loading="lazy">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Snow Rider 3D</h3>
+                        <p class="game-description">Surf down snowy slopes and avoid obstacles in this thrilling 3D winter adventure game.</p>
+                        <button class="play-btn" onclick="openGame('Snow Rider 3D', 'https://www.hoodamath.com/mobile/games/snow-rider-3d/game.html?nocheckorient=1')">Play Now</button>
+                    </div>
+                </div>
+
+                <!-- Drift Hunters -->
+                <div class="game-card" data-category="racing" data-game="drift-hunters">
+                    <div class="game-image">
+                        <img src="https://www.hoodamath.com/large/drifthunters_300x225.jpg" alt="Drift Hunters" loading="lazy">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Drift Hunters</h3>
+                        <p class="game-description">Master the art of drifting with customizable cars and multiple tracks in this realistic driving simulator.</p>
+                        <button class="play-btn" onclick="openGame('Drift Hunters', 'https://www.hoodamath.com/mobile/games/drift-hunters/game.html?nocheckorient=1')">Play Now</button>
+                    </div>
+                </div>
+
+                <!-- Water Rider 3D -->
+                <div class="game-card" data-category="action" data-game="water-rider-3d">
+                    <div class="game-image">
+                        <img src="https://www.hoodamath.com/large/waterrider3d_300x225.jpg" alt="Water Rider 3D" loading="lazy">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Water Rider 3D</h3>
+                        <p class="game-description">Ride the waves and perform amazing stunts in this exciting water sports adventure.</p>
+                        <button class="play-btn" onclick="openGame('Water Rider 3D', 'https://www.hoodamath.com/mobile/games/water-rider-3d/game.html?nocheckorient=1')">Play Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Content Banner Ad -->
+            <div class="ad-banner">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7422597423401123"
+                     data-ad-slot="2468013579"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
+
+            <div class="games-grid">
+                <!-- Run 3 -->
+                <div class="game-card" data-category="adventure" data-game="run-3">
+                    <div class="game-image">
+                        <img src="https://www.hoodamath.com/large/run3_300x225.jpg" alt="Run 3" loading="lazy">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Run 3</h3>
+                        <p class="game-description">Navigate through space tunnels in this popular endless runner with gravity-defying gameplay.</p>
+                        <button class="play-btn" onclick="openGame('Run 3', 'https://www.hoodamath.com/mobile/games/run3/game.html?nocheckorient=1')">Play Now</button>
+                    </div>
+                </div>
+
+                <!-- Dino Game -->
+                <div class="game-card" data-category="arcade" data-game="dino-game">
+                    <div class="game-image">
+                        <img src="https://www.hoodamath.com/large/dinogame_300x225.jpg" alt="Dino Game" loading="lazy">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Dino Game</h3>
+                        <p class="game-description">The classic Chrome dinosaur game! Jump over cacti and avoid obstacles in this retro runner.</p>
+                        <button class="play-btn" onclick="openGame('Dino Game', 'https://www.hoodamath.com/mobile/games/dino-game/game.html?nocheckorient=1')">Play Now</button>
+                    </div>
+                </div>
+
+                <!-- Slope Run -->
+                <div class="game-card" data-category="arcade" data-game="slope-run">
+                    <div class="game-image">
+                        <img src="https://www.hoodamath.com/large/sloperun_300x225.jpg" alt="Slope Run" loading="lazy">
+                    </div>
+                    <div class="game-info">
+                        <h3 class="game-title">Slope Run</h3>
+                        <p class="game-description">Control a ball rolling down a steep slope while avoiding obstacles and collecting points.</p>
+                        <button class="play-btn" onclick="openGame('Slope Run', 'https://www.hoodamath.com/mobile/games/slope-run/game.html?nocheckorient=1')">Play Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Content Banner Ad -->
+            <div class="ad-banner">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7422597423401123"
+                     data-ad-slot="9753108642"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+            </div>
         </div>
 
-        <div class="games-grid" id="gamesGrid">
-            <!-- Snow Rider 3D -->
-            <div class="game-card" data-category="racing" data-game="snow-rider-3d">
-                <div class="game-image">
-                    <img src="https://www.hoodamath.com/large/snowrider3d_300x225.jpg" alt="Snow Rider 3D" loading="lazy">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Snow Rider 3D</h3>
-                    <p class="game-description">Surf down snowy slopes and avoid obstacles in this thrilling 3D winter adventure game.</p>
-                    <button class="play-btn" onclick="openGame('Snow Rider 3D', 'https://www.hoodamath.com/mobile/games/snow-rider-3d/game.html?nocheckorient=1')">Play Now</button>
-                </div>
+        <!-- About Page -->
+        <div id="aboutPage" class="page-content">
+            <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
+            
+            <!-- Page Banner Ad -->
+            <div class="ad-banner-content">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7422597423401123"
+                     data-ad-slot="6789012345"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
             </div>
+            
+            <h2>About Unblocked Games</h2>
+            <p>Welcome to the ultimate destination for unblocked games! Our platform provides students, workers, and gamers with access to high-quality, entertaining games that can be played anywhere, anytime.</p>
+            
+            <h3>Our Mission</h3>
+            <p>We believe that everyone deserves access to fun, engaging games during their breaks and free time. Our carefully curated collection of unblocked games ensures that you can enjoy premium gaming experiences without any restrictions.</p>
+            
+            <h3>Why Choose Us?</h3>
+            <ul>
+                <li><strong>100% Free:</strong> All games are completely free to play with no hidden costs</li>
+                <li><strong>No Downloads:</strong> Play instantly in your browser without installing anything</li>
+                <li><strong>School Safe:</strong> All games are appropriate for educational environments</li>
+                <li><strong>Mobile Friendly:</strong> Optimized for all devices including phones and tablets</li>
+                <li><strong>Regularly Updated:</strong> New games added frequently to keep the collection fresh</li>
+                <li><strong>Safe & Secure:</strong> No malware, viruses, or inappropriate content</li>
+            </ul>
+            
+            <h3>Game Categories</h3>
+            <p>Our games span multiple categories including action, racing, adventure, and arcade games. Each game is carefully selected for quality, entertainment value, and educational appropriateness.</p>
+            
+            <h3>Contact Us</h3>
+            <p>Have suggestions for new games or feedback about our platform? We'd love to hear from you! Use our contact form to get in touch with our team.</p>
+        </div>
 
-            <!-- Drift Hunters -->
-            <div class="game-card" data-category="racing" data-game="drift-hunters">
-                <div class="game-image">
-                    <img src="https://www.hoodamath.com/large/drifthunters_300x225.jpg" alt="Drift Hunters" loading="lazy">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Drift Hunters</h3>
-                    <p class="game-description">Master the art of drifting with customizable cars and multiple tracks in this realistic driving simulator.</p>
-                    <button class="play-btn" onclick="openGame('Drift Hunters', 'https://www.hoodamath.com/mobile/games/drift-hunters/game.html?nocheckorient=1')">Play Now</button>
-                </div>
+        <!-- Contact Page -->
+        <div id="contactPage" class="page-content">
+            <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
+            
+            <!-- Page Banner Ad -->
+            <div class="ad-banner-content">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-7422597423401123"
+                     data-ad-slot="3456789012"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
             </div>
+            
+            <h2>Contact Us</h2>
+            <p>We value your feedback and suggestions! Whether you have a game recommendation, found a bug, or just want to say hello, we're here to help.</p>
+            
+            <div class="contact-form">
+                <form id="contactForm" onsubmit="submitContactForm(event)">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" required placeholder="Tell us about your suggestion, bug report, or feedback..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+            
+            <h3>Other Ways to Reach Us</h3>
+            <p><strong>Response Time:</strong> We typically respond to messages within 24-48 hours.</p>
+            <p><strong>Game Suggestions:</strong> Always looking for new games to add to our collection!</p>
+            <p><strong>Bug Reports:</strong> Help us improve by reporting any issues you encounter.</p>
+        </div>
 
-            <!-- Water Rider 3D -->
-            <div class="game-card" data-category="action" data-game="water-rider-3d">
-                <div class="game-image">
-                    <img src="https://www.hoodamath.com/large/waterrider3d_300x225.jpg" alt="Water Rider 3D" loading="lazy">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Water Rider 3D</h3>
-                    <p class="game-description">Ride the waves and perform amazing stunts in this exciting water sports adventure.</p>
-                    <button class="play-btn" onclick="openGame('Water Rider 3D', 'https://www.hoodamath.com/mobile/games/water-rider-3d/game.html?nocheckorient=1')">Play Now</button>
-                </div>
-            </div>
+        <!-- Privacy Policy Page -->
+        <div id="privacyPage" class="page-content">
+            <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
+            <h2>Privacy Policy</h2>
+            <p><strong>Last Updated:</strong> January 2024</p>
+            
+            <h3>Information We Collect</h3>
+            <p>We are committed to protecting your privacy. This policy outlines how we collect, use, and protect your information when you use our unblocked games website.</p>
+            
+            <h3>Data Collection</h3>
+            <ul>
+                <li><strong>Automatically Collected:</strong> We may collect basic usage statistics such as pages visited, games played, and time spent on the site to improve our services.</li>
+                <li><strong>Cookies:</strong> We use cookies to remember your preferences and improve your experience.</li>
+                <li><strong>Contact Forms:</strong> Information provided through contact forms is used solely to respond to your inquiries.</li>
+            </ul>
+            
+            <h3>How We Use Your Information</h3>
+            <ul>
+                <li>To provide and improve our gaming services</li>
+                <li>To understand how our website is used and optimize performance</li>
+                <li>To respond to your questions and feedback</li>
+                <li>To ensure the security and integrity of our platform</li>
+            </ul>
+            
+            <h3>Information Sharing</h3>
+            <p>We do not sell, trade, or share your personal information with third parties except as required by law or to protect our rights and the safety of our users.</p>
+            
+            <h3>Data Security</h3>
+            <p>We implement appropriate security measures to protect your information against unauthorized access, alteration, disclosure, or destruction.</p>
+            
+            <h3>Children's Privacy</h3>
+            <p>Our website is designed to be safe for users of all ages. We do not knowingly collect personal information from children under 13 without parental consent.</p>
+            
+            <h3>Changes to This Policy</h3>
+            <p>We may update this privacy policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
+        </div>
 
-            <!-- Run 3 -->
-            <div class="game-card" data-category="adventure" data-game="run-3">
-                <div class="game-image">
-                    <img src="https://www.hoodamath.com/large/run3_300x225.jpg" alt="Run 3" loading="lazy">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Run 3</h3>
-                    <p class="game-description">Navigate through space tunnels in this popular endless runner with gravity-defying gameplay.</p>
-                    <button class="play-btn" onclick="openGame('Run 3', 'https://www.hoodamath.com/mobile/games/run3/game.html?nocheckorient=1')">Play Now</button>
-                </div>
-            </div>
+        <!-- Terms of Service Page -->
+        <div id="termsPage" class="page-content">
+            <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
+            <h2>Terms of Service</h2>
+            <p><strong>Last Updated:</strong> January 2024</p>
+            
+            <h3>Acceptance of Terms</h3>
+            <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            
+            <h3>Use License</h3>
+            <ul>
+                <li>Permission is granted to use our website for personal, non-commercial use</li>
+                <li>You may not modify or copy the materials without written permission</li>
+                <li>You may not use the materials for any commercial purpose</li>
+                <li>You may not attempt to reverse engineer any software on this website</li>
+            </ul>
+            
+            <h3>User Conduct</h3>
+            <p>When using our website, you agree to:</p>
+            <ul>
+                <li>Use the website only for lawful purposes</li>
+                <li>Not attempt to gain unauthorized access to any part of the website</li>
+                <li>Not interfere with or disrupt the website's operation</li>
+                <li>Not use the website to transmit harmful or malicious content</li>
+            </ul>
+            
+            <h3>Disclaimer</h3>
+            <p>The materials on this website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties including, without limitation, implied warranties of merchantability or fitness for a particular purpose.</p>
+            
+            <h3>Limitations</h3>
+            <p>In no event shall our company or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on this website.</p>
+            
+            <h3>Accuracy of Materials</h3>
+            <p>The materials appearing on this website could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its website are accurate, complete, or current.</p>
+            
+            <h3>Modifications</h3>
+            <p>We may revise these terms of service at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+        </div>
 
-            <!-- Dino Game -->
-            <div class="game-card" data-category="arcade" data-game="dino-game">
-                <div class="game-image">
-                    <img src="https://www.hoodamath.com/large/dinogame_300x225.jpg" alt="Dino Game" loading="lazy">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Dino Game</h3>
-                    <p class="game-description">The classic Chrome dinosaur game! Jump over cacti and avoid obstacles in this retro runner.</p>
-                    <button class="play-btn" onclick="openGame('Dino Game', 'https://www.hoodamath.com/mobile/games/dino-game/game.html?nocheckorient=1')">Play Now</button>
-                </div>
-            </div>
-
-            <!-- Slope Run -->
-            <div class="game-card" data-category="arcade" data-game="slope-run">
-                <div class="game-image">
-                    <img src="https://www.hoodamath.com/large/sloperun_300x225.jpg" alt="Slope Run" loading="lazy">
-                </div>
-                <div class="game-info">
-                    <h3 class="game-title">Slope Run</h3>
-                    <p class="game-description">Control a ball rolling down a steep slope while avoiding obstacles and collecting points.</p>
-                    <button class="play-btn" onclick="openGame('Slope Run', 'https://www.hoodamath.com/mobile/games/slope-run/game.html?nocheckorient=1')">Play Now</button>
-                </div>
-            </div>
+        <!-- DMCA Page -->
+        <div id="dmcaPage" class="page-content">
+            <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
+            <h2>DMCA Copyright Policy</h2>
+            <p><strong>Last Updated:</strong> January 2024</p>
+            
+            <h3>Copyright Infringement Notice</h3>
+            <p>We respect the intellectual property rights of others and expect our users to do the same. In accordance with the Digital Millennium Copyright Act (DMCA), we will respond to notices of alleged copyright infringement.</p>
+            
+            <h3>Filing a DMCA Notice</h3>
+            <p>If you believe that your copyrighted work has been copied in a way that constitutes copyright infringement, please provide our designated agent with the following information:</p>
+            <ul>
+                <li>A physical or electronic signature of the copyright owner or authorized representative</li>
+                <li>Identification of the copyrighted work claimed to have been infringed</li>
+                <li>Identification of the material that is claimed to be infringing and its location on our website</li>
+                <li>Your contact information (address, telephone number, and email address)</li>
+                <li>A statement that you have a good faith belief that the use is not authorized by the copyright owner</li>
+                <li>A statement that the information in the notification is accurate and that you are authorized to act on behalf of the copyright owner</li>
+            </ul>
+            
+            <h3>Counter-Notice</h3>
+            <p>If you believe that your material was removed or disabled by mistake or misidentification, you may file a counter-notice with the following information:</p>
+            <ul>
+                <li>Your physical or electronic signature</li>
+                <li>Identification of the material that was removed and its location</li>
+                <li>A statement under penalty of perjury that you have a good faith belief that the material was removed by mistake</li>
+                <li>Your contact information and consent to jurisdiction of federal court</li>
+            </ul>
+            
+            <h3>Repeat Infringers</h3>
+            <p>We have a policy of terminating the accounts of users who are repeat copyright infringers.</p>
+            
+            <h3>Contact Information</h3>
+            <p>DMCA notices should be sent through our contact form with "DMCA Notice" in the subject line, or you may contact us directly.</p>
+            
+            <h3>Good Faith</h3>
+            <p>Please note that under Section 512(f) of the DMCA, any person who knowingly materially misrepresents that material is infringing may be subject to liability.</p>
         </div>
     </div>
 
-    <!-- About Page -->
-    <div id="aboutPage" class="page-content">
-        <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
-        <h2>About Unblocked Games</h2>
-        <p>Welcome to the ultimate destination for unblocked games! Our platform provides students, workers, and gamers with access to high-quality, entertaining games that can be played anywhere, anytime.</p>
-        
-        <h3>Our Mission</h3>
-        <p>We believe that everyone deserves access to fun, engaging games during their breaks and free time. Our carefully curated collection of unblocked games ensures that you can enjoy premium gaming experiences without any restrictions.</p>
-        
-        <h3>Why Choose Us?</h3>
-        <ul>
-            <li><strong>100% Free:</strong> All games are completely free to play with no hidden costs</li>
-            <li><strong>No Downloads:</strong> Play instantly in your browser without installing anything</li>
-            <li><strong>School Safe:</strong> All games are appropriate for educational environments</li>
-            <li><strong>Mobile Friendly:</strong> Optimized for all devices including phones and tablets</li>
-            <li><strong>Regularly Updated:</strong> New games added frequently to keep the collection fresh</li>
-            <li><strong>Safe & Secure:</strong> No malware, viruses, or inappropriate content</li>
-        </ul>
-        
-        <h3>Game Categories</h3>
-        <p>Our games span multiple categories including action, racing, adventure, and arcade games. Each game is carefully selected for quality, entertainment value, and educational appropriateness.</p>
-        
-        <h3>Contact Us</h3>
-        <p>Have suggestions for new games or feedback about our platform? We'd love to hear from you! Use our contact form to get in touch with our team.</p>
-    </div>
-
-    <!-- Contact Page -->
-    <div id="contactPage" class="page-content">
-        <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
-        <h2>Contact Us</h2>
-        <p>We value your feedback and suggestions! Whether you have a game recommendation, found a bug, or just want to say hello, we're here to help.</p>
-        
-        <div class="contact-form">
-            <form id="contactForm" onsubmit="submitContactForm(event)">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject:</label>
-                    <input type="text" id="subject" name="subject" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" required placeholder="Tell us about your suggestion, bug report, or feedback..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
+    <footer class="footer">
+        <!-- Footer Banner Ad -->
+        <div class="ad-banner-footer">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7422597423401123"
+                 data-ad-slot="8642097531"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
         </div>
         
-        <h3>Other Ways to Reach Us</h3>
-        <p><strong>Response Time:</strong> We typically respond to messages within 24-48 hours.</p>
-        <p><strong>Game Suggestions:</strong> Always looking for new games to add to our collection!</p>
-        <p><strong>Bug Reports:</strong> Help us improve by reporting any issues you encounter.</p>
-    </div>
-
-    <!-- Privacy Policy Page -->
-    <div id="privacyPage" class="page-content">
-        <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
-        <h2>Privacy Policy</h2>
-        <p><strong>Last Updated:</strong> January 2024</p>
-        
-        <h3>Information We Collect</h3>
-        <p>We are committed to protecting your privacy. This policy outlines how we collect, use, and protect your information when you use our unblocked games website.</p>
-        
-        <h3>Data Collection</h3>
-        <ul>
-            <li><strong>Automatically Collected:</strong> We may collect basic usage statistics such as pages visited, games played, and time spent on the site to improve our services.</li>
-            <li><strong>Cookies:</strong> We use cookies to remember your preferences and improve your experience.</li>
-            <li><strong>Contact Forms:</strong> Information provided through contact forms is used solely to respond to your inquiries.</li>
-        </ul>
-        
-        <h3>How We Use Your Information</h3>
-        <ul>
-            <li>To provide and improve our gaming services</li>
-            <li>To understand how our website is used and optimize performance</li>
-            <li>To respond to your questions and feedback</li>
-            <li>To ensure the security and integrity of our platform</li>
-        </ul>
-        
-        <h3>Information Sharing</h3>
-        <p>We do not sell, trade, or share your personal information with third parties except as required by law or to protect our rights and the safety of our users.</p>
-        
-        <h3>Data Security</h3>
-        <p>We implement appropriate security measures to protect your information against unauthorized access, alteration, disclosure, or destruction.</p>
-        
-        <h3>Children's Privacy</h3>
-        <p>Our website is designed to be safe for users of all ages. We do not knowingly collect personal information from children under 13 without parental consent.</p>
-        
-        <h3>Changes to This Policy</h3>
-        <p>We may update this privacy policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
-    </div>
-
-    <!-- Terms of Service Page -->
-    <div id="termsPage" class="page-content">
-        <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
-        <h2>Terms of Service</h2>
-        <p><strong>Last Updated:</strong> January 2024</p>
-        
-        <h3>Acceptance of Terms</h3>
-        <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
-        
-        <h3>Use License</h3>
-        <ul>
-            <li>Permission is granted to use our website for personal, non-commercial use</li>
-            <li>You may not modify or copy the materials without written permission</li>
-            <li>You may not use the materials for any commercial purpose</li>
-            <li>You may not attempt to reverse engineer any software on this website</li>
-        </ul>
-        
-        <h3>User Conduct</h3>
-        <p>When using our website, you agree to:</p>
-        <ul>
-            <li>Use the website only for lawful purposes</li>
-            <li>Not attempt to gain unauthorized access to any part of the website</li>
-            <li>Not interfere with or disrupt the website's operation</li>
-            <li>Not use the website to transmit harmful or malicious content</li>
-        </ul>
-        
-        <h3>Disclaimer</h3>
-        <p>The materials on this website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties including, without limitation, implied warranties of merchantability or fitness for a particular purpose.</p>
-        
-        <h3>Limitations</h3>
-        <p>In no event shall our company or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on this website.</p>
-        
-        <h3>Accuracy of Materials</h3>
-        <p>The materials appearing on this website could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its website are accurate, complete, or current.</p>
-        
-        <h3>Modifications</h3>
-        <p>We may revise these terms of service at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
-    </div>
-
-    <!-- DMCA Page -->
-    <div id="dmcaPage" class="page-content">
-        <button class="back-btn" onclick="showPage('home')">← Back to Games</button>
-        <h2>DMCA Copyright Policy</h2>
-        <p><strong>Last Updated:</strong> January 2024</p>
-        
-        <h3>Copyright Infringement Notice</h3>
-        <p>We respect the intellectual property rights of others and expect our users to do the same. In accordance with the Digital Millennium Copyright Act (DMCA), we will respond to notices of alleged copyright infringement.</p>
-        
-        <h3>Filing a DMCA Notice</h3>
-        <p>If you believe that your copyrighted work has been copied in a way that constitutes copyright infringement, please provide our designated agent with the following information:</p>
-        <ul>
-            <li>A physical or electronic signature of the copyright owner or authorized representative</li>
-            <li>Identification of the copyrighted work claimed to have been infringed</li>
-            <li>Identification of the material that is claimed to be infringing and its location on our website</li>
-            <li>Your contact information (address, telephone number, and email address)</li>
-            <li>A statement that you have a good faith belief that the use is not authorized by the copyright owner</li>
-            <li>A statement that the information in the notification is accurate and that you are authorized to act on behalf of the copyright owner</li>
-        </ul>
-        
-        <h3>Counter-Notice</h3>
-        <p>If you believe that your material was removed or disabled by mistake or misidentification, you may file a counter-notice with the following information:</p>
-        <ul>
-            <li>Your physical or electronic signature</li>
-            <li>Identification of the material that was removed and its location</li>
-            <li>A statement under penalty of perjury that you have a good faith belief that the material was removed by mistake</li>
-            <li>Your contact information and consent to jurisdiction of federal court</li>
-        </ul>
-        
-        <h3>Repeat Infringers</h3>
-        <p>We have a policy of terminating the accounts of users who are repeat copyright infringers.</p>
-        
-        <h3>Contact Information</h3>
-        <p>DMCA notices should be sent through our contact form with "DMCA Notice" in the subject line, or you may contact us directly.</p>
-        
-        <h3>Good Faith</h3>
-        <p>Please note that under Section 512(f) of the DMCA, any person who knowingly materially misrepresents that material is infringing may be subject to liability.</p>
-    </div>
-</div>
-
-<footer class="footer">
-    <p>© 2024 Unblocked Games - Play Free Games Online</p>
-    <div class="footer-links">
-        <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
-        <a href="#" onclick="showPage('terms')">Terms of Service</a>
-        <a href="#" onclick="showPage('contact')">Contact Us</a>
-        <a href="#" onclick="showPage('dmca')">DMCA</a>
-    </div>
-</footer>
-
-<!-- Game Modal -->
-<div id="gameModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="modal-title" id="modalTitle">Game Title</span>
-            <span class="close" onclick="closeGame()">&times;</span>
+        <p>© 2024 Unblocked Games - Play Free Games Online</p>
+        <div class="footer-links">
+            <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+            <a href="#" onclick="showPage('terms')">Terms of Service</a>
+            <a href="#" onclick="showPage('contact')">Contact Us</a>
+            <a href="#" onclick="showPage('dmca')">DMCA</a>
         </div>
-        <iframe id="gameFrame" class="game-frame" src=""></iframe>
+    </footer>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title" id="modalTitle">Game Title</span>
+                <span class="close" onclick="closeGame()">&times;</span>
+            </div>
+            <iframe id="gameFrame" class="game-frame" src=""></iframe>
+        </div>
     </div>
-</div>
 
-<script>
-    // Game functionality
-    function openGame(title, url) {
-        document.getElementById('modalTitle').textContent = title;
-        document.getElementById('gameFrame').src = url;
-        document.getElementById('gameModal').style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeGame() {
-        document.getElementById('gameModal').style.display = 'none';
-        document.getElementById('gameFrame').src = '';
-        document.body.style.overflow = 'auto';
-    }
-
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        const modal = document.getElementById('gameModal');
-        if (event.target === modal) {
-            closeGame();
+    <script>
+        // Game functionality
+        function openGame(title, url) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('gameFrame').src = url;
+            document.getElementById('gameModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
-    }
 
-    // ESC key to close modal
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            closeGame();
+        function closeGame() {
+            document.getElementById('gameModal').style.display = 'none';
+            document.getElementById('gameFrame').src = '';
+            document.body.style.overflow = 'auto';
         }
-    });
 
-    // Category filtering
-    document.addEventListener('DOMContentLoaded', function() {
-        const categoryBtns = document.querySelectorAll('.category-btn');
-        const gameCards = document.querySelectorAll('.game-card');
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('gameModal');
+            if (event.target === modal) {
+                closeGame();
+            }
+        }
 
-        categoryBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all buttons
-                categoryBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
+        // ESC key to close modal
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeGame();
+            }
+        });
 
-                const category = this.getAttribute('data-category');
+        // Category filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const gameCards = document.querySelectorAll('.game-card');
 
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const category = this.getAttribute('data-category');
+
+                    gameCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
                 gameCards.forEach(card => {
-                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                    const gameTitle = card.querySelector('.game-title').textContent.toLowerCase();
+                    const gameDescription = card.querySelector('.game-description').textContent.toLowerCase();
+                    
+                    if (gameTitle.includes(searchTerm) || gameDescription.includes(searchTerm)) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
@@ -935,36 +1167,18 @@
             });
         });
 
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            
-            gameCards.forEach(card => {
-                const gameTitle = card.querySelector('.game-title').textContent.toLowerCase();
-                const gameDescription = card.querySelector('.game-description').textContent.toLowerCase();
-                
-                if (gameTitle.includes(searchTerm) || gameDescription.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 }
             });
         });
-    });
-
-    // Smooth scrolling for nav links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-</script>
+    </script>
 </body>
 </html>
