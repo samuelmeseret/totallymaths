@@ -37,7 +37,7 @@ Welcome to the ultimate destination for unblocked games! Our platform provides s
 
 ## 🌐 Live Website
 
-**🔗 [Access the Games Here](https://yourusername.github.io/your-repo-name/somethingijnfaisdhfsaidfjsada.html)**
+**🔗 [Access the Games Here](https://totallymaths.com/somethingijnfaisdhfsaidfjsada.html)**
 
 ## 🛠️ Tech Stack
 
@@ -74,15 +74,15 @@ Have suggestions for new games or found a bug? We'd love to hear from you!
 
 ## 📄 Legal
 
-- [Privacy Policy](https://yourusername.github.io/your-repo-name/somethingijnfaisdhfsaidfjsada.html)
-- [Terms of Service](https://yourusername.github.io/your-repo-name/somethingijnfaisdhfsaidfjsada.html)
-- [DMCA Policy](https://yourusername.github.io/your-repo-name/somethingijnfaisdhfsaidfjsada.html)
+- [Privacy Policy](https://totallymaths.com/somethingijnfaisdhfsaidfjsada.html)
+- [Terms of Service](https://totallymaths.com/somethingijnfaisdhfsaidfjsada.html)
+- [DMCA Policy](https://totallymaths.com/somethingijnfaisdhfsaidfjsada.html)
 
 ---
 
 ## 🎮 Ready to Play?
 
-### **[🚀 START PLAYING NOW!](https://yourusername.github.io/your-repo-name/somethingijnfaisdhfsaidfjsada.html)**
+### **[🚀 START PLAYING NOW!](https://totallymaths.com/somethingijnfaisdhfsaidfjsada.html)**
 
 ---
 
