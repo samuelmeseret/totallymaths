@@ -2,7 +2,7 @@
 
 **Play your favorite games anywhere, anytime - completely free and unblocked!**
 
-## 🚀 [Play Now - Click Here!](https://totallymaths/somethingijnfaisdhfsaidfjsada.html)
+## 🚀 [Play Now - Click Here!](https://totallymaths.com/somethingijnfaisdhfsaidfjsada.html)
 
 ---
 
