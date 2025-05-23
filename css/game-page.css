@@ -1,4 +1,4 @@
-/* Individual Game Page Styles */
+/* Individual Game Page Styles - Enhanced Version */
 
 /* Game Header */
 .game-header {
@@ -65,9 +65,11 @@
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     background: #000;
+    border: none;
+    outline: none;
 }
 
-/* Fullscreen Button */
+/* Enhanced Fullscreen Button */
 .fullscreen-btn {
     display: block;
     width: 100%;
@@ -83,6 +85,7 @@
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    outline: none;
 }
 
 .fullscreen-btn:hover {
@@ -93,6 +96,11 @@
 
 .fullscreen-btn:active {
     transform: translateY(0);
+}
+
+.fullscreen-btn:focus {
+    outline: 2px solid #FFD700;
+    outline-offset: 2px;
 }
 
 /* Hide fullscreen button on iPhone */
@@ -221,6 +229,59 @@
     box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
 }
 
+/* Enhanced Fullscreen Styles */
+.game-wrapper:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-wrapper:-moz-full-screen {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-wrapper:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-wrapper:-webkit-full-screen .game-iframe {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.game-wrapper:-moz-full-screen .game-iframe {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.game-wrapper:fullscreen .game-iframe {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+}
+
+/* Hide all buttons and UI elements in fullscreen */
+.game-wrapper:-webkit-full-screen .fullscreen-btn,
+.game-wrapper:-moz-full-screen .fullscreen-btn,
+.game-wrapper:fullscreen .fullscreen-btn {
+    display: none !important;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .game-iframe {
@@ -278,20 +339,4 @@
         align-items: center;
         gap: 0.5rem;
     }
-}
-
-/* Fullscreen styles */
-.game-wrapper:-webkit-full-screen .game-iframe {
-    width: 100vw;
-    height: 100vh;
-}
-
-.game-wrapper:-moz-full-screen .game-iframe {
-    width: 100vw;
-    height: 100vh;
-}
-
-.game-wrapper:fullscreen .game-iframe {
-    width: 100vw;
-    height: 100vh;
 }
