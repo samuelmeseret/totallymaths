@@ -51,55 +51,28 @@
         <!-- Game Container -->
         <div class="game-container">
             <div class="game-wrapper">
-                <!-- Loading Screen -->
-                <div id="loadingScreen" style="text-align: center; padding: 4rem; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 10px;">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎮</div>
-                    <h3 style="color: white; margin-bottom: 1rem;">Preparing Roblox...</h3>
-                    <div style="width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.3); border-top: 5px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
-                </div>
-
-                <!-- Game Launch Options -->
-                <div id="gameOptions" style="display: none; text-align: center; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
-                    <h3 style="color: #FFD700; margin-bottom: 2rem;">🚀 Choose Your Launch Method</h3>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-                        <!-- Method 1: Replace entire page -->
-                        <button onclick="replacePageContent()" style="padding: 1.5rem; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
-                            🔄 Transform Page<br>
-                            <small style="opacity: 0.8;">Replace this page</small>
-                        </button>
-                        
-                        <!-- Method 2: Popup window -->
-                        <button onclick="openPopupWindow()" style="padding: 1.5rem; background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
-                            🪟 Popup Window<br>
-                            <small style="opacity: 0.8;">New borderless window</small>
-                        </button>
-                        
-                        <!-- Method 3: Fullscreen overlay -->
-                        <button onclick="createFullscreenOverlay()" style="padding: 1.5rem; background: linear-gradient(45deg, #f093fb, #f5576c); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
-                            📺 Fullscreen Mode<br>
-                            <small style="opacity: 0.8;">Overlay on this page</small>
-                        </button>
-                        
-                        <!-- Method 4: About:blank injection -->
-                        <button onclick="openBlankWindow()" style="padding: 1.5rem; background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
-                            📄 Blank Tab<br>
-                            <small style="opacity: 0.8;">Clean new tab</small>
-                        </button>
-                    </div>
-                    
-                    <p style="opacity: 0.8; font-size: 0.9rem;">💡 If one method doesn't work, try another!</p>
-                </div>
+                <iframe id="gameFrame" 
+                        src="https://anura.pro/" 
+                        frameborder="0" 
+                        allow="fullscreen; autoplay; microphone; camera"
+                        allowfullscreen
+                        class="game-iframe">
+                </iframe>
+                
+                <!-- Fullscreen Button -->
+                <button id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullscreen()">
+                    ⛶ Play Fullscreen
+                </button>
             </div>
             
             <!-- Game Controls Info -->
             <div class="controls-info">
-                <h3>🎮 How to Access Roblox</h3>
-                <p><strong>Step 1:</strong> Choose a launch method above</p>
-                <p><strong>Step 2:</strong> Wait for the proxy to load</p>
-                <p><strong>Step 3:</strong> Navigate to roblox.com in the proxy</p>
-                <p><strong>Step 4:</strong> Login or create account to play games</p>
-                <p><strong>Controls:</strong> WASD to move, Mouse to look, Space to jump</p>
+                <h3>🎮 How to Play Roblox</h3>
+                <p><strong>Getting Started:</strong> Create an account or play as guest to access thousands of games</p>
+                <p><strong>Navigation:</strong> Use mouse to look around, WASD keys to move, Space to jump</p>
+                <p><strong>Game Types:</strong> Adventure, RPG, Simulation, Racing, Horror, and much more!</p>
+                <p><strong>Features:</strong> Chat with friends, customize your avatar, and explore user-created worlds</p>
+                <p><strong>Tips:</strong> Try different game genres to find your favorites and join popular experiences!</p>
             </div>
         </div>
 
@@ -163,222 +136,7 @@
         </div>
     </footer>
 
-    <!-- CSS for animations -->
-    <style>
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .game-options button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        #fullscreenOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: black;
-            z-index: 9999;
-            display: none;
-        }
-        
-        #fullscreenOverlay iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        #closeOverlay {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 10000;
-        }
-    </style>
-
-    <!-- Fullscreen Overlay -->
-    <div id="fullscreenOverlay">
-        <button id="closeOverlay" onclick="closeFullscreenOverlay()">✕ Close</button>
-        <iframe id="overlayFrame" src=""></iframe>
-    </div>
-
     <!-- Scripts -->
-    <script>
-        // Show game options after loading
-        setTimeout(() => {
-            document.getElementById('loadingScreen').style.display = 'none';
-            document.getElementById('gameOptions').style.display = 'block';
-        }, 2000);
-
-        // Method 1: Replace entire page content
-        function replacePageContent() {
-            // Store original content in case user wants to go back
-            const originalContent = document.documentElement.innerHTML;
-            
-            // Replace entire page with iframe
-            document.body.innerHTML = `
-                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 9999;">
-                    <button onclick="location.reload()" style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.2); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; z-index: 10000;">
-                        🔙 Go Back
-                    </button>
-                    <iframe src="https://holyunblocker.org/ultraviolet" style="width: 100%; height: 100%; border: none; background: white;"></iframe>
-                </div>
-            `;
-            
-            // Change page title
-            document.title = "Roblox Proxy";
-        }
-
-        // Method 2: Create popup window
-        function openPopupWindow() {
-            const popup = window.open('', 'robloxProxy', 'width=1200,height=800,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no');
-            
-            if (popup) {
-                popup.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>Roblox Proxy</title>
-                        <style>
-                            body { margin: 0; padding: 0; overflow: hidden; }
-                            iframe { width: 100vw; height: 100vh; border: none; }
-                        </style>
-                    </head>
-                    <body>
-                        <iframe src="https://holyunblocker.org/ultraviolet"></iframe>
-                    </body>
-                    </html>
-                `);
-                popup.document.close();
-            } else {
-                alert('Popup blocked! Please allow popups for this site and try again.');
-            }
-        }
-
-        // Method 3: Fullscreen overlay
-        function createFullscreenOverlay() {
-            const overlay = document.getElementById('fullscreenOverlay');
-            const frame = document.getElementById('overlayFrame');
-            
-            frame.src = 'https://holyunblocker.org/ultraviolet';
-            overlay.style.display = 'block';
-            
-            // Hide body scroll
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeFullscreenOverlay() {
-            document.getElementById('fullscreenOverlay').style.display = 'none';
-            document.getElementById('overlayFrame').src = '';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Method 4: About:blank window with content injection
-        function openBlankWindow() {
-            const newWindow = window.open('about:blank', 'robloxBlank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
-            
-            if (newWindow) {
-                newWindow.document.open();
-                newWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>Roblox</title>
-                        <meta charset="UTF-8">
-                        <style>
-                            * { margin: 0; padding: 0; box-sizing: border-box; }
-                            body { font-family: Arial, sans-serif; background: #1a1a1a; overflow: hidden; }
-                            .container { position: relative; width: 100vw; height: 100vh; }
-                            iframe { width: 100%; height: 100%; border: none; }
-                            .controls { 
-                                position: absolute; 
-                                top: 10px; 
-                                right: 10px; 
-                                z-index: 1000; 
-                                background: rgba(0,0,0,0.7); 
-                                padding: 10px; 
-                                border-radius: 5px; 
-                            }
-                            .controls button { 
-                                background: #4CAF50; 
-                                color: white; 
-                                border: none; 
-                                padding: 5px 10px; 
-                                margin: 0 5px; 
-                                border-radius: 3px; 
-                                cursor: pointer; 
-                            }
-                            .controls button:hover { background: #45a049; }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="container">
-                            <div class="controls">
-                                <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
-                                <button onclick="window.close()">✕ Close</button>
-                            </div>
-                            <iframe id="proxyFrame" src="https://holyunblocker.org/ultraviolet"></iframe>
-                        </div>
-                        <script>
-                            function toggleFullscreen() {
-                                if (!document.fullscreenElement) {
-                                    document.documentElement.requestFullscreen();
-                                } else {
-                                    document.exitFullscreen();
-                                }
-                            }
-                            
-                            // Set favicon
-                            const link = document.createElement('link');
-                            link.rel = 'icon';
-                            link.href = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎮</text></svg>';
-                            document.head.appendChild(link);
-                        </script>
-                    </body>
-                    </html>
-                `);
-                newWindow.document.close();
-            } else {
-                alert('Popup blocked! Please allow popups for this site and try again.');
-            }
-        }
-
-        // Enhanced fullscreen toggle
-        function toggleFullscreen() {
-            const gameWrapper = document.querySelector('.game-wrapper');
-            
-            if (!document.fullscreenElement) {
-                if (gameWrapper.requestFullscreen) {
-                    gameWrapper.requestFullscreen();
-                } else if (gameWrapper.webkitRequestFullscreen) {
-                    gameWrapper.webkitRequestFullscreen();
-                } else if (gameWrapper.msRequestFullscreen) {
-                    gameWrapper.msRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            // ESC to close overlay
-            if (e.key === 'Escape') {
-                closeFullscreenOverlay();
-            }
-        });
-    </script>
+    <script src="../js/game-page.js"></script>
 </body>
 </html>
