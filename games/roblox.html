@@ -51,13 +51,27 @@
         <!-- Game Container -->
         <div class="game-container">
             <div class="game-wrapper">
+                <!-- Method 1: Try different iframe approach with additional attributes -->
                 <iframe id="gameFrame" 
-                        src="https://coproxy.io/free-web-proxy/" 
+                        src="https://holyunblocker.org/ultraviolet" 
                         frameborder="0" 
-                        allow="fullscreen; autoplay; microphone; camera"
+                        allow="fullscreen; autoplay; microphone; camera; clipboard-read; clipboard-write"
                         allowfullscreen
-                        class="game-iframe">
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation"
+                        referrerpolicy="no-referrer"
+                        class="game-iframe"
+                        style="width: 100%; height: 600px; border: none;">
                 </iframe>
+                
+                <!-- Fallback: Direct link button if iframe fails -->
+                <div id="fallbackContainer" style="display: none; text-align: center; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 10px; margin-top: 1rem;">
+                    <h3 style="color: #FFD700; margin-bottom: 1rem;">🚀 Launch Roblox Proxy</h3>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.9;">Click the button below to open Roblox in a new tab</p>
+                    <a href="https://holyunblocker.org/ultraviolet" target="_blank" rel="noopener noreferrer" 
+                       style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); color: white; text-decoration: none; border-radius: 25px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+                        🎮 Play Roblox Now
+                    </a>
+                </div>
                 
                 <!-- Fullscreen Button -->
                 <button id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullscreen()">
@@ -67,17 +81,51 @@
             
             <!-- Game Controls Info -->
             <div class="controls-info">
-                <h3>🎮 How to Play Roblox</h3>
-                <p><strong>Getting Started:</strong> Create an account or play as guest to access thousands of games</p>
+                <h3>🎮 How to Access Roblox</h3>
+                <p><strong>Step 1:</strong> The proxy will load above, or click the "Play Roblox Now" button</p>
+                <p><strong>Step 2:</strong> In the proxy, navigate to roblox.com</p>
+                <p><strong>Step 3:</strong> Create an account or login to access thousands of games</p>
                 <p><strong>Navigation:</strong> Use mouse to look around, WASD keys to move, Space to jump</p>
                 <p><strong>Game Types:</strong> Adventure, RPG, Simulation, Racing, Horror, and much more!</p>
-                <p><strong>Features:</strong> Chat with friends, customize your avatar, and explore user-created worlds</p>
                 <p><strong>Tips:</strong> Try different game genres to find your favorites and join popular experiences!</p>
             </div>
         </div>
 
         <!-- Auto Ad Space -->
         <div class="ad-space content-ad"></div>
+
+        <!-- Alternative Access Methods -->
+        <div style="background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+            <h2 style="color: #FFD700; margin-bottom: 1.5rem; text-align: center;">🔧 Alternative Access Methods</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #FFD700; margin-bottom: 1rem;">🌐 Web Proxy</h3>
+                    <p style="margin-bottom: 1rem;">Access through HolyUnblocker proxy</p>
+                    <a href="https://holyunblocker.org/ultraviolet" target="_blank" rel="noopener noreferrer" 
+                       style="display: inline-block; padding: 0.8rem 1.5rem; background: linear-gradient(45deg, #667eea, #764ba2); color: white; text-decoration: none; border-radius: 20px; font-weight: 600;">
+                        🚀 Launch Proxy
+                    </a>
+                </div>
+                
+                <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #FFD700; margin-bottom: 1rem;">📱 Mobile Access</h3>
+                    <p style="margin-bottom: 1rem;">Best experience on mobile devices</p>
+                    <a href="https://holyunblocker.org/ultraviolet" target="_blank" rel="noopener noreferrer" 
+                       style="display: inline-block; padding: 0.8rem 1.5rem; background: linear-gradient(45deg, #f093fb, #f5576c); color: white; text-decoration: none; border-radius: 20px; font-weight: 600;">
+                        📱 Open Mobile
+                    </a>
+                </div>
+                
+                <div style="text-align: center; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
+                    <h3 style="color: #FFD700; margin-bottom: 1rem;">🔒 Private Tab</h3>
+                    <p style="margin-bottom: 1rem;">Use incognito/private browsing</p>
+                    <button onclick="openInPrivate()" 
+                            style="display: inline-block; padding: 0.8rem 1.5rem; background: linear-gradient(45deg, #4ecdc4, #44a08d); color: white; border: none; border-radius: 20px; font-weight: 600; cursor: pointer;">
+                        🔒 Private Mode
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- Related Games Section -->
         <div class="related-games">
@@ -138,5 +186,67 @@
 
     <!-- Scripts -->
     <script src="../js/game-page.js"></script>
+    <script>
+        // Check if iframe loads successfully
+        document.getElementById('gameFrame').addEventListener('load', function() {
+            console.log('Iframe loaded successfully');
+        });
+
+        // Handle iframe loading errors
+        document.getElementById('gameFrame').addEventListener('error', function() {
+            console.log('Iframe failed to load, showing fallback');
+            document.getElementById('fallbackContainer').style.display = 'block';
+        });
+
+        // Alternative method: Check if iframe is blocked after a delay
+        setTimeout(function() {
+            const iframe = document.getElementById('gameFrame');
+            try {
+                // Try to access iframe content (will fail if blocked)
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDoc || iframeDoc.location.href === 'about:blank') {
+                    throw new Error('Iframe blocked');
+                }
+            } catch (e) {
+                console.log('Iframe appears to be blocked, showing fallback options');
+                document.getElementById('fallbackContainer').style.display = 'block';
+                // Optionally hide the iframe
+                iframe.style.display = 'none';
+            }
+        }, 3000);
+
+        // Function to open in private/incognito mode
+        function openInPrivate() {
+            // This will just open in a new tab, as we can't force private mode from JavaScript
+            window.open('https://holyunblocker.org/ultraviolet', '_blank', 'noopener,noreferrer');
+            alert('💡 Tip: For best results, manually open this link in an incognito/private browsing window!');
+        }
+
+        // Enhanced fullscreen function
+        function toggleFullscreen() {
+            const gameWrapper = document.querySelector('.game-wrapper');
+            const gameFrame = document.getElementById('gameFrame');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            if (!document.fullscreenElement) {
+                // Enter fullscreen
+                if (gameWrapper.requestFullscreen) {
+                    gameWrapper.requestFullscreen();
+                } else if (gameWrapper.webkitRequestFullscreen) {
+                    gameWrapper.webkitRequestFullscreen();
+                } else if (gameWrapper.msRequestFullscreen) {
+                    gameWrapper.msRequestFullscreen();
+                } else {
+                    // Fallback: open in new tab if fullscreen not supported
+                    window.open('https://holyunblocker.org/ultraviolet', '_blank', 'noopener,noreferrer');
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+    </script>
 </body>
 </html>
