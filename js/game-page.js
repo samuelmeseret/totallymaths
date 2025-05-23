@@ -1,4 +1,4 @@
-// Individual Game Page JavaScript
+// Individual Game Page JavaScript - Fixed Version
 
 // Fullscreen functionality
 function toggleFullscreen() {
@@ -16,14 +16,13 @@ function toggleFullscreen() {
             gameWrapper.msRequestFullscreen();
         }
         
-        fullscreenBtn.textContent = '🔙 Exit Fullscreen';
-        fullscreenBtn.style.position = 'fixed';
-        fullscreenBtn.style.bottom = '20px';
-        fullscreenBtn.style.left = '50%';
-        fullscreenBtn.style.transform = 'translateX(-50%)';
-        fullscreenBtn.style.zIndex = '9999';
-        fullscreenBtn.style.width = 'auto';
-        fullscreenBtn.style.padding = '0.8rem 2rem';
+        // Hide the fullscreen button completely when in fullscreen
+        fullscreenBtn.style.display = 'none';
+        
+        // Focus the iframe to ensure it receives input
+        setTimeout(() => {
+            gameFrame.focus();
+        }, 100);
         
     } else {
         // Exit fullscreen
@@ -44,9 +43,11 @@ document.addEventListener('msfullscreenchange', handleFullscreenChange);
 
 function handleFullscreenChange() {
     const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const gameFrame = document.getElementById('gameFrame');
     
     if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-        // Exited fullscreen
+        // Exited fullscreen - show button again
+        fullscreenBtn.style.display = 'block';
         fullscreenBtn.textContent = '⛶ Play Fullscreen';
         fullscreenBtn.style.position = 'static';
         fullscreenBtn.style.bottom = 'auto';
@@ -55,6 +56,12 @@ function handleFullscreenChange() {
         fullscreenBtn.style.zIndex = 'auto';
         fullscreenBtn.style.width = '100%';
         fullscreenBtn.style.padding = '1rem';
+    } else {
+        // In fullscreen - keep button hidden and focus iframe
+        fullscreenBtn.style.display = 'none';
+        setTimeout(() => {
+            gameFrame.focus();
+        }, 100);
     }
 }
 
@@ -135,21 +142,62 @@ function initRelatedGamesEffects() {
     });
 }
 
-// Keyboard shortcuts for fullscreen
+// Enhanced keyboard shortcuts for fullscreen - but only when NOT in fullscreen
 function initKeyboardShortcuts() {
     document.addEventListener('keydown', function(event) {
-        // F11 or F for fullscreen
-        if (event.key === 'F11' || (event.key === 'f' && event.ctrlKey)) {
-            event.preventDefault();
-            toggleFullscreen();
-        }
-        
-        // ESC to exit fullscreen
-        if (event.key === 'Escape' && document.fullscreenElement) {
-            event.preventDefault();
-            toggleFullscreen();
+        // Only handle shortcuts when not in fullscreen mode
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+            // F11 for fullscreen (prevent default browser F11)
+            if (event.key === 'F11') {
+                event.preventDefault();
+                toggleFullscreen();
+            }
+            
+            // Ctrl+F for fullscreen alternative
+            if (event.key === 'f' && event.ctrlKey) {
+                event.preventDefault();
+                toggleFullscreen();
+            }
+        } else {
+            // In fullscreen mode, only ESC should exit
+            if (event.key === 'Escape') {
+                // Let the browser handle ESC naturally
+                // Don't prevent default - browser will exit fullscreen
+                return;
+            }
+            // Don't prevent any other keys in fullscreen - let the game handle them
         }
     });
+}
+
+// Prevent spacebar from triggering fullscreen when game has focus
+function preventSpacebarFullscreen() {
+    const gameFrame = document.getElementById('gameFrame');
+    
+    // Add event listener to prevent spacebar from bubbling up
+    document.addEventListener('keydown', function(event) {
+        // If we're in fullscreen and spacebar is pressed, make sure focus is on iframe
+        if (event.key === ' ' && (document.fullscreenElement || document.webkitFullscreenElement)) {
+            // Ensure the iframe has focus to receive the spacebar input
+            gameFrame.focus();
+        }
+    });
+}
+
+// Enhanced focus management for iframe
+function initGameFocus() {
+    const gameFrame = document.getElementById('gameFrame');
+    const gameWrapper = document.querySelector('.game-wrapper');
+    
+    // Click on game area should focus the iframe
+    gameWrapper.addEventListener('click', function() {
+        gameFrame.focus();
+    });
+    
+    // Auto-focus iframe when page loads
+    setTimeout(() => {
+        gameFrame.focus();
+    }, 1000);
 }
 
 // Initialize all functions when DOM loads
@@ -158,6 +206,8 @@ document.addEventListener('DOMContentLoaded', function() {
     showGameLoading();
     initRelatedGamesEffects();
     initKeyboardShortcuts();
+    preventSpacebarFullscreen();
+    initGameFocus();
     
     // Auto-scroll to game on mobile
     if (window.innerWidth <= 768) {
