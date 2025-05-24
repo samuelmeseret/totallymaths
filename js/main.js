@@ -8,7 +8,7 @@ function initTypingAnimation() {
     const texts = [
         "Welcome to Gaming Paradise! 🎮",
         "Play Anywhere, Anytime! 🌍", 
-        "100% Free & Unblocked! 🆓",
+        "100% Free! 🆓",
         "No Downloads Required! ⚡",
         "Adventure Awaits You! 🚀"
     ];
