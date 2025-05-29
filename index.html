@@ -3,102 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Totally Maths 🌟</title>
-    <meta name="description" content="Play the best unblocked fun anywhere, anytime! Free, safe, and fun for school and work.">
+    <title>🎮 Totally Maths - Free Unblocked Games</title>
+    <meta name="description" content="Play the best free unblocked games! Minecraft, Roblox, Fall Friends, and more. Safe, fun games for school and work.">
     
     <!-- AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2372648416712746" crossorigin="anonymous"></script>
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/games.css">
 </head>
 <body>
-    <!-- Stars Background -->
-    <div class="stars" id="stars"></div>
-
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">🎮 Totally Maths</a>
+            <a href="index.html" class="nav-logo">🎮 Totally Maths</a>
+            <div class="search-container">
+                <input type="text" class="search-box" placeholder="Search games..." id="searchInput">
+            </div>
             <div class="nav-menu">
-                <a href="fun.html" class="nav-link">Fun</a>
                 <a href="about.html" class="nav-link">About</a>
                 <a href="contact.html" class="nav-link">Contact</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>🌟 Totally Maths 🌟</h1>
-        <p class="subtitle">Where Gaming Never Stops! 🎮✨</p>
-        
-        <div class="typing-text" id="typingText"></div>
+    <div class="container">
+        <!-- Auto Ad Space -->
+        <div class="ad-space top-ad"></div>
 
-        <a href="fun.html" class="mega-button">
-            🚀 ENTER THE UNIVERSE! 🚀
-        </a>
-    </section>
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>🎮 Free Unblocked Games</h1>
+            <p>Play your favorite games anywhere, anytime! 🚀</p>
+        </div>
 
-    <!-- Features Grid -->
-    <section class="features">
-        <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🆓</div>
-                    <h3>100% FREE</h3>
-                    <p>Zero cost, maximum fun!</p>
+        <!-- Category Filters -->
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All Games</button>
+            <button class="category-btn" data-category="sandbox">Sandbox</button>
+            <button class="category-btn" data-category="platform">Platform</button>
+            <button class="category-btn" data-category="action">Action</button>
+            <button class="category-btn" data-category="racing">Racing</button>
+            <button class="category-btn" data-category="adventure">Adventure</button>
+            <button class="category-btn" data-category="arcade">Arcade</button>
+            <button class="category-btn" data-category="puzzle">Puzzle</button>
+        </div>
+
+        <!-- Auto Ad Space -->
+        <div class="ad-space mid-ad"></div>
+
+        <!-- Games Grid -->
+        <div class="games-grid" id="gamesGrid">
+            <!-- Fall Friends -->
+            <div class="game-card" data-category="action">
+                <div class="game-image">
+                    <img src="https://via.placeholder.com/300x225/ff6b6b/ffffff?text=Fall+Friends" alt="Fall Friends">
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>MOBILE READY</h3>
-                    <p>Play on ANY device!</p>
+                <div class="game-info">
+                    <h3>Fall Friends</h3>
+                    <p>Ultimate party game with obstacle courses and multiplayer fun!</p>
+                    <a href="games/fall-friends.html" class="play-btn">Play Now</a>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🏫</div>
-                    <h3>SCHOOL SAFE</h3>
-                    <p>Educational approved!</p>
+            </div>
+
+            <!-- Gravity Hole -->
+            <div class="game-card" data-category="puzzle">
+                <div class="game-image">
+                    <img src="https://via.placeholder.com/300x225/4ecdc4/ffffff?text=Gravity+Hole" alt="Gravity Hole">
+                </div>
+                <div class="game-info">
+                    <h3>Gravity Hole</h3>
+                    <p>Mind-bending physics puzzle game with gravity manipulation!</p>
+                    <a href="games/gravity-hole.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Stickman Playground Sandbox -->
+            <div class="game-card" data-category="sandbox">
+                <div class="game-image">
+                    <img src="https://via.placeholder.com/300x225/764ba2/ffffff?text=Stickman+Playground" alt="Stickman Playground Sandbox">
+                </div>
+                <div class="game-info">
+                    <h3>Stickman Playground Sandbox</h3>
+                    <p>Create and experiment with realistic ragdoll physics!</p>
+                    <a href="games/stickman-playground-sandbox.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Minecraft -->
+            <div class="game-card" data-category="sandbox">
+                <div class="game-image">
+                    <img src="https://www.minecraft.net/content/dam/archive/backgrounds/minecraft-background-03.jpg" alt="Minecraft" onerror="this.src='https://logos-world.net/wp-content/uploads/2020/04/Minecraft-Logo.png'">
+                </div>
+                <div class="game-info">
+                    <h3>Minecraft</h3>
+                    <p>Build, explore, and survive in the ultimate sandbox game!</p>
+                    <a href="games/minecraft.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Roblox -->
+            <div class="game-card" data-category="platform">
+                <div class="game-image">
+                    <img src="https://tr.rbxcdn.com/30DAY-Avatar-4d0816a8d71b0f2b4e1a9a1a9f3d9b6e.png" alt="Roblox" onerror="this.src='https://logos-world.net/wp-content/uploads/2021/03/Roblox-Logo.png'">
+                </div>
+                <div class="game-info">
+                    <h3>Roblox</h3>
+                    <p>Ultimate online gaming platform with millions of games!</p>
+                    <a href="games/roblox.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Snow Rider 3D -->
+            <div class="game-card" data-category="racing">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/snowrider3d_300x225.jpg" alt="Snow Rider 3D">
+                </div>
+                <div class="game-info">
+                    <h3>Snow Rider 3D</h3>
+                    <p>Surf down snowy slopes and avoid obstacles!</p>
+                    <a href="games/snow-rider-3d.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Drift Hunters -->
+            <div class="game-card" data-category="racing">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/drifthunters_300x225.jpg" alt="Drift Hunters">
+                </div>
+                <div class="game-info">
+                    <h3>Drift Hunters</h3>
+                    <p>Master the art of drifting with customizable cars!</p>
+                    <a href="games/drift-hunters.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Water Rider 3D -->
+            <div class="game-card" data-category="action">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/waterrider3d_300x225.jpg" alt="Water Rider 3D">
+                </div>
+                <div class="game-info">
+                    <h3>Water Rider 3D</h3>
+                    <p>Ride the waves and perform amazing stunts!</p>
+                    <a href="games/water-rider-3d.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Run 3 -->
+            <div class="game-card" data-category="adventure">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/run3_300x225.jpg" alt="Run 3">
+                </div>
+                <div class="game-info">
+                    <h3>Run 3</h3>
+                    <p>Navigate through space tunnels!</p>
+                    <a href="games/run-3.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Dino Game -->
+            <div class="game-card" data-category="arcade">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/dinogame_300x225.jpg" alt="Dino Game">
+                </div>
+                <div class="game-info">
+                    <h3>Dino Game</h3>
+                    <p>The classic Chrome dinosaur game!</p>
+                    <a href="games/dino-game.html" class="play-btn">Play Now</a>
+                </div>
+            </div>
+
+            <!-- Slope Run -->
+            <div class="game-card" data-category="arcade">
+                <div class="game-image">
+                    <img src="https://www.hoodamath.com/large/sloperun_300x225.jpg" alt="Slope Run">
+                </div>
+                <div class="game-info">
+                    <h3>Slope Run</h3>
+                    <p>Control a ball rolling down a steep slope!</p>
+                    <a href="games/slope-run.html" class="play-btn">Play Now</a>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Quick  Preview -->
-    <section class="-preview">
-        <div class="container">
-            <h2>🎮 FEATURED Fun 🎮</h2>
-            <div class="games-grid">
-                <div class="game-card">
-                    <h3>🎮 Roblox</h3>
-                    <p>Millions of user-created Fun!</p>
-                </div>
-                <div class="game-card">
-                    <h3>🏂 Snow Rider 3D</h3>
-                    <p>Shred the slopes!</p>
-                </div>
-                <div class="game-card">
-                    <h3>🏎️ Drift Hunters</h3>
-                    <p>Burn rubber!</p>
-                </div>
-                <div class="game-card">
-                    <h3>🚀 Run 3</h3>
-                    <p>Defy gravity!</p>
-                </div>
-            </div>
-            <a href="fun.html" class="cta-button">🎯 PLAY ALL FUN 🎯</a>
-        </div>
-    </section>
+        <!-- Auto Ad Space -->
+        <div class="ad-space bottom-ad"></div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>© 2024 Totally Maths</p>
+            <div class="ad-space footer-ad"></div>
+            <p>© 2024 Totally Maths - Play Free Games Online</p>
             <div class="footer-links">
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
                 <a href="dmca.html">DMCA</a>
             </div>
         </div>
@@ -106,6 +208,6 @@
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
-    <script src="js/animations.js"></script>
+    <script src="js/games-list.js"></script>
 </body>
 </html>
