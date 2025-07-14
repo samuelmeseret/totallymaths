@@ -129,3 +129,6 @@ function initPlayButtonEffects() {
 
 // Initialize play button effects
 window.addEventListener('load', initPlayButtonEffects);
+if (typeof module !== 'undefined') {
+    module.exports = { openGame, closeGame };
+}
