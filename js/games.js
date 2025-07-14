@@ -22,12 +22,12 @@ function closeGame() {
 }
 
 // Close modal when clicking outside
-window.onclick = function(event) {
+window.addEventListener('click', function(event) {
     const modal = document.getElementById('gameModal');
     if (event.target === modal) {
         closeGame();
     }
-}
+});
 
 // ESC key to close modal
 document.addEventListener('keydown', function(event) {
@@ -129,3 +129,4 @@ function initPlayButtonEffects() {
 
 // Initialize play button effects
 window.addEventListener('load', initPlayButtonEffects);
+
