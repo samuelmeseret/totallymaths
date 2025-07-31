@@ -142,7 +142,7 @@ function initRelatedGamesEffects() {
     });
 }
 
-// Enhanced keyboard shortcuts for fullscreen - but only when NOT in fullscreen
+// Keyboard shortcut handler: toggles fullscreen with F11/Ctrl+F when not in fullscreen and listens for Escape while in fullscreen
 function initKeyboardShortcuts() {
     document.addEventListener('keydown', function(event) {
         // Only handle shortcuts when not in fullscreen mode
